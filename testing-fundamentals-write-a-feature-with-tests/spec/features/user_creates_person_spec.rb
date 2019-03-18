@@ -13,12 +13,26 @@ end
 
 feature 'user edits existing person' do
   scenario 'with valid data' do
-    Person.create(first_name: 'Lionel')
-    visit edit_person_path(Person.last)
-    fill_in 'person_first_name', with: 'Barack'
-    click_button 'Edit Person'
+    person = Person.create(first_name: 'Lionel')
+
+    update_person(person: person, first_name: 'Barack')
 
     expect(page).to have_content('Person edited')
     expect(page).to have_content('Barack')
+  end
+
+  scenario 'with invalid data' do
+    person = Person.create(first_name: 'Lionel')
+
+    update_person(person: person, first_name: '')
+
+    expect(page).to have_content("First name can't be blank")
+  end
+
+  def update_person(person:, first_name:)
+    visit person_path(person)
+    click_link 'Edit'
+    fill_in 'person_first_name', with: first_name
+    click_button 'Update'
   end
 end
