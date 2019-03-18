@@ -6,7 +6,7 @@ class PeopleController < ApplicationController
   def create
     @person = Person.new(person_attributes)
     if @person.save
-      redirect_to @person, notice: "Person created."
+      redirect_to @person, notice: 'Person created.'
     else
       render :new
     end
@@ -14,6 +14,19 @@ class PeopleController < ApplicationController
 
   def show
     @person = Person.find(params[:id])
+  end
+
+  def edit
+    @person = Person.find(params[:id])
+  end
+
+  def update
+    @person = Person.find(params[:id])
+    if @person.update(person_attributes)
+      redirect_to @person, notice: 'Person edited.'
+    else
+      render :edit
+    end
   end
 
   private

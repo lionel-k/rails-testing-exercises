@@ -1,0 +1,6 @@
+<%= form_for @person, method: :put do |form| %>
+  <%= @person.errors.full_messages %>
+  <%= form.label :first_name %>
+  <%= form.text_field :first_name %>
+  <%= form.submit "Edit Person" %>
+<% end %>
