@@ -1,4 +1,6 @@
 class PeopleController < ApplicationController
+  before_action :set_person, only: [:show, :edit, :update]
+
   def new
     @person = Person.new
   end
@@ -13,15 +15,12 @@ class PeopleController < ApplicationController
   end
 
   def show
-    @person = Person.find(params[:id])
   end
 
   def edit
-    @person = Person.find(params[:id])
   end
 
   def update
-    @person = Person.find(params[:id])
     if @person.update(person_attributes)
       redirect_to @person, notice: 'Person edited.'
     else
@@ -30,6 +29,10 @@ class PeopleController < ApplicationController
   end
 
   private
+
+  def set_person
+    @person = Person.find(params[:id])
+  end
 
   def person_attributes
     params.require(:person).permit(:first_name)
